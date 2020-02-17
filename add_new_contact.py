@@ -3,7 +3,7 @@ from selenium import webdriver
 from selenium.webdriver.support.ui import Select
 from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import NoAlertPresentException
-import unittest, time, re
+import unittest
 
 from contact import Contact
 
@@ -26,7 +26,7 @@ class AddNewContact(unittest.TestCase):
         self.open_home_page(wd)
 
         self.login(wd, login_name="admin", password="secret")
-        self.create_contact(wd, Contact(firstname="", middlename="", lastname="", nickname="", title="", company="", address="", home_phone="", mobile_phone="", work_phone="", main_email="", bday="", bmonth="", byear="", aday="", amonth="", ayear="", address2="", phone2="", notes=""))
+        self.create_contact(wd, Contact(firstname="", middlename="", lastname="", nickname="", title="", company="", address="", home_phone="", mobile_phone="", work_phone="", main_email="", bday="-", bmonth="-", byear="", aday="-", amonth="-", ayear="", address2="", phone2="", notes=""))
         self.return_to_home_page(wd)
         self.logout(wd)
 
@@ -36,10 +36,7 @@ class AddNewContact(unittest.TestCase):
     def return_to_home_page(self, wd):
         wd.find_element_by_link_text("home page").click()
 
-    def create_contact(self, wd, contact, firstname, middlename, lastname, nickname,
-                       title, company, address, home_phone, mobile_phone,
-                       work_phone, main_email, bday, bmonth, byear,
-                       aday, amonth, ayear, address2, phone2, notes):
+    def create_contact(self, wd, contact):
         # init contact creation
         wd.find_element_by_link_text("add new").click()
         # fill contact form
@@ -78,19 +75,15 @@ class AddNewContact(unittest.TestCase):
         wd.find_element_by_name("email").send_keys(contact.main_email)
         wd.find_element_by_name("bday").click()
         Select(wd.find_element_by_name("bday")).select_by_visible_text(contact.bday)
-        wd.find_element_by_xpath("//option[@value='16']").click()
         wd.find_element_by_name("bmonth").click()
         Select(wd.find_element_by_name("bmonth")).select_by_visible_text(contact.bmonth)
-        wd.find_element_by_xpath("//option[@value='October']").click()
         wd.find_element_by_name("byear").click()
         wd.find_element_by_name("byear").clear()
         wd.find_element_by_name("byear").send_keys(contact.byear)
         wd.find_element_by_name("aday").click()
         Select(wd.find_element_by_name("aday")).select_by_visible_text(contact.aday)
-        wd.find_element_by_xpath("(//option[@value='16'])[2]").click()
         wd.find_element_by_name("amonth").click()
         Select(wd.find_element_by_name("amonth")).select_by_visible_text(contact.amonth)
-        wd.find_element_by_xpath("(//option[@value='December'])[2]").click()
         wd.find_element_by_name("ayear").click()
         wd.find_element_by_name("ayear").clear()
         wd.find_element_by_name("ayear").send_keys(contact.ayear)
