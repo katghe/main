@@ -3,7 +3,7 @@ from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import NoAlertPresentException
 import unittest
-from group import Group
+from model.group import Group
 
 class AddNewGroup(unittest.TestCase):
     def setUp(self):
@@ -13,20 +13,14 @@ class AddNewGroup(unittest.TestCase):
     
     def test_add_new_group(self):
         wd = self.wd
-        self.open_home_page(wd)
         self.login(wd, username="admin", password="secret")
-        self.open_group_page(wd)
         self.create_group(wd, Group(name="Group2", header="Gro", footer="up"))
-        self.return_to_groups_page(wd)
         self.logout(wd)
 
     def test_add_new_empty_group(self):
         wd = self.wd
-        self.open_home_page(wd)
         self.login(wd, username="admin", password="secret")
-        self.open_group_page(wd)
         self.create_group(wd,  Group(name="", header="", footer=""))
-        self.return_to_groups_page(wd)
         self.logout(wd)
 
     def open_group_page(self, wd):
@@ -40,6 +34,7 @@ class AddNewGroup(unittest.TestCase):
         wd.find_element_by_link_text("group page").click()
 
     def create_group(self, wd, group):
+        self.open_group_page(wd)
         # init group creation
         wd.find_element_by_name("new").click()
         # fill group form
@@ -54,9 +49,10 @@ class AddNewGroup(unittest.TestCase):
         wd.find_element_by_name("group_footer").send_keys(group.footer)
         # submit group creation
         wd.find_element_by_name("submit").click()
+        self.return_to_groups_page(wd)
 
     def login(self, wd, username, password):
-
+        self.open_home_page(wd)
         wd.find_element_by_name("user").clear()
         wd.find_element_by_name("user").send_keys(username)
         wd.find_element_by_id("LoginForm").click()
