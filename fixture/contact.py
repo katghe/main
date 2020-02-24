@@ -73,16 +73,16 @@ class ContactHelper:
 
     def delete_first_contact(self):
         wd = self.app.wd
-        self.open_home_page()
+        self.app.open_home_page()
         # Select first contact
         wd.find_element_by_name("selected[]").click()
-        wd.find_element_by_xpath("//input[@value ='Delete'])").click()
+        wd.find_element_by_xpath("//input[@value='Delete']").click()
         wd.switch_to_alert().accept()
-        self.return_to_home_page()
+        wd.find_element_by_link_text("home").click()
 
-    def edit_contact(self):
+    def edit_first_contact(self):
         wd = self.app.wd
-        self.open_home_page()
+        self.app.open_home_page()
         wd.find_element_by_xpath("//img[@alt='Edit']").click()
         # Edit contact form
         wd.find_element_by_name("firstname").click()
@@ -121,14 +121,14 @@ class ContactHelper:
         wd.find_element_by_name("bday").click()
         Select(wd.find_element_by_name("bday")).select_by_visible_text("10")
         wd.find_element_by_name("bmonth").click()
-        Select(wd.find_element_by_name("bmonth")).select_by_visible_text("january")
+        Select(wd.find_element_by_name("bmonth")).select_by_visible_text("January")
         wd.find_element_by_name("byear").click()
         wd.find_element_by_name("byear").clear()
         wd.find_element_by_name("byear").send_keys("1980")
         wd.find_element_by_name("aday").click()
         Select(wd.find_element_by_name("aday")).select_by_visible_text("10")
         wd.find_element_by_name("amonth").click()
-        Select(wd.find_element_by_name("amonth")).select_by_visible_text("january")
+        Select(wd.find_element_by_name("amonth")).select_by_visible_text("January")
         wd.find_element_by_name("ayear").click()
         wd.find_element_by_name("ayear").clear()
         wd.find_element_by_name("ayear").send_keys("1990")
@@ -141,7 +141,8 @@ class ContactHelper:
         wd.find_element_by_name("notes").click()
         wd.find_element_by_name("notes").clear()
         wd.find_element_by_name("notes").send_keys("notes")
-        wd.find_element_by_xpath("(//input[@name='update')").click()
+        wd.find_element_by_name("update").click()
+        self.return_to_home_page()
 
     def return_to_home_page(self):
         wd = self.app.wd
