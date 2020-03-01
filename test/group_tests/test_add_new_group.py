@@ -7,6 +7,7 @@ def test_add_new_group(app):
 
 
 
+
 def test_add_new_empty_group(app):
     app.group.create(Group(name="", header="", footer=""))
 
