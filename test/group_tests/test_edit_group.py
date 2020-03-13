@@ -29,6 +29,7 @@ def test_edit_group_header(app):
 
 
 
+
 def test_edit_group_footer(app):
     if app.group.count() == 0:
         app.group.create(Group(footer="sdfsdf"))
