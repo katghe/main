@@ -139,21 +139,31 @@ class ContactHelper:
         middlename = wd.find_element_by_name("middlename").get_attribute("value")
         lastname = wd.find_element_by_name("lastname").get_attribute("value")
         nickname = wd.find_element_by_name("nickname").get_attribute("value")
+        title = wd.find_element_by_name("title").get_attribute("value")
+        company = wd.find_element_by_name("company").get_attribute("value")
         address = wd.find_element_by_name("address").get_attribute("value")
-        email = wd.find_element_by_name("email").get_attribute("value")
-        email2 = wd.find_element_by_name("email2").get_attribute("value")
-        email3 = wd.find_element_by_name("email3").get_attribute("value")
-        home = wd.find_element_by_name("home").get_attribute("value")
-        mobile = wd.find_element_by_name("mobile").get_attribute("value")
-        work = wd.find_element_by_name("work").get_attribute("value")
-        phone2 = wd.find_element_by_name("phone2").get_attribute("value")
-        return Contact(id=id, firstname=firstname, lastname=lastname, nickname=nickname, address=address, email=email, email2=email2,
-                        email3=email3, home=home, mobile=mobile, work=work, phone2=phone2, middlename=middlename)
+        text = wd.find_element_by_id("content").text
+        all_phones_edit = re.search("Home:(.*)\nMobile:(.*)\nWork:(.*)", text).group(1, 2, 3)
+        all_emails_edit = re.search("E-mail: (.*)\nE-mail2: (.*)\nE-mail3: (.*)", text).group(1, 2, 3)
+        bday = wd.find_element_by_name("bday").get_attribute("value")
+        bmonth = wd.find_element_by_name("bmonth").get_attribute("value")
+        byear = wd.find_element_by_name("byear").get_attribute("value")
+        aday = wd.find_element_by_name("aday").get_attribute("value")
+        amonth = wd.find_element_by_name("amonth").get_attribute("value")
+        ayear = wd.find_element_by_name("ayear").get_attribute("value")
+        address2 = wd.find_element_by_name("address2").get_attribute("value")
+        return Contact(
+            firstname=firstname, middlename=middlename, lastname=lastname, nickname=nickname, title=title,
+            company=company, address=address, all_phones_from_edit_page=all_phones_edit,
+            all_emails_from_edit_page=all_emails_edit, email=email, email2=email2, email3=email3, bday=bday,
+            bmonth=bmonth, byear=byear, aday=aday, amonth=amonth, ayear=ayear, address2=address2)
 
     def get_contact_from_view_page(self, index):
         wd = self.app.wd
         self.open_contact_view_by_index(index)
         text = wd.find_element_by_id("content").text
+        all_phones_view = re.search("(.*)\n(.*)\n(.*)\n(.*)\n(.*)\n(.*)\n(.*)\n(.*)\n(.*)\n(.*)\n(.*)\n(.*)\n(.*)\n(.*)\n(.*)", text).group(6, 7, 8, 14)
+        all_emails_view = re.search("(.*)\n(.*)\n(.*)\n(.*)\n(.*)\n(.*)\n(.*)\n(.*)\n(.*)\n(.*)\n(.*)\n(.*)\n(.*)\n(.*)\n(.*)", text).group(9, 10, 11)
         firstname = re.search("(.*)", text).group(1)
         middlename = re.search("(.*) (.*)", text).group(2)
         lastname = re.search("(.*) (.*) (.*)", text).group(3)
@@ -161,13 +171,6 @@ class ContactHelper:
         title = re.search("(.*)\n(.*)\n(.*)", text).group(3)
         company = re.search("(.*)\n(.*)\n(.*)\n(.*)", text).group(4)
         address = re.search("(.*)\n(.*)\n(.*)\n(.*)\n(.*)", text).group(5)
-        home = re.search("H: (.*)", text).group(1)
-        mobile = re.search("M: (.*)", text).group(1)
-        work = re.search("W: (.*)", text).group(1)
-        phone2 = re.search("P: (.*)", text).group(1)
-        email = re.search("(.*)\n(.*)\n(.*)\n(.*)\n(.*)\n(.*)\n(.*)\n(.*)\n(.*)", text).group(9)
-        email2 = re.search("(.*)\n(.*)\n(.*)\n(.*)\n(.*)\n(.*)\n(.*)\n(.*)\n(.*)\n(.*)", text).group(10)
-        email3 = re.search("(.*)\n(.*)\n(.*)\n(.*)\n(.*)\n(.*)\n(.*)\n(.*)\n(.*)\n(.*)\n(.*)", text).group(11)
         bday = re.search("(.*)\n(.*)\n(.*)\n(.*)\n(.*)\n(.*)\n(.*)\n(.*)\n(.*)\n(.*)\n(.*)\n(.*) (.*)", text).group(13)
         bmonth = re.search("(.*)\n(.*)\n(.*)\n(.*)\n(.*)\n(.*)\n(.*)\n(.*)\n(.*)\n(.*)\n(.*)\n(.*) (.*) (.*)", text).group(14)
         byear = re.search("(.*)\n(.*)\n(.*)\n(.*)\n(.*)\n(.*)\n(.*)\n(.*)\n(.*)\n(.*)\n(.*)\n(.*) (.*) (.*) (.*)", text).group(15)
@@ -175,8 +178,22 @@ class ContactHelper:
         amonth = re.search("(.*)\n(.*)\n(.*)\n(.*)\n(.*)\n(.*)\n(.*)\n(.*)\n(.*)\n(.*)\n(.*)\n(.*) (.*) (.*) (.*) (.*)\n(.*) (.*) (.*)", text).group(19)
         ayear = re.search("(.*)\n(.*)\n(.*)\n(.*)\n(.*)\n(.*)\n(.*)\n(.*)\n(.*)\n(.*)\n(.*)\n(.*) (.*) (.*) (.*) (.*)\n(.*) (.*) (.*) (.*)", text).group(20)
         address2 = re.search("(.*)\n(.*)\n(.*)\n(.*)\n(.*)\n(.*)\n(.*)\n(.*)\n(.*)\n(.*)\n(.*)\n(.*) (.*) (.*) (.*) (.*)\n(.*) (.*) (.*) (.*) (.*)\n(.*)", text).group(22)
-        return Contact(lastname=lastname, nickname=nickname, firstname=firstname, middlename=middlename, title=title, company=company, address=address , email=email, email2=email2,
-                       email3=email3, home=home, mobile=mobile, work=work, bday=bday, bmonth=bmonth, byear=byear, aday=aday, amonth=amonth, ayear=ayear, phone2=phone2, address2=address2)
+        return Contact(
+            firstname=firstname, middlename=middlename,  lastname=lastname, nickname=nickname, title=title,
+            company=company, address=address, all_phones_from_view_page=all_phones_view,
+            all_emails_from_view_page=all_emails_view, bday=bday, bmonth=bmonth, byear=byear, aday=aday, amonth=amonth,
+            ayear=ayear, address2=address2)
+
+
+
+
+
+
+
+
+
+
+
 
 
 

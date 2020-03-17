@@ -4,8 +4,9 @@ from sys import maxsize
 class Contact:
     def __init__(self, firstname=None, middlename=None, lastname=None, nickname=None, title=None, company=None,
                  address=None, home=None, mobile=None, work=None, email=None, email2=None, email3=None, bday=None, bmonth=None, byear=None,
-                 aday=None, amonth=None, ayear=None, address2=None, phone2=None, notes=None, id=None, all_emails_from_home_page = None,
-                 all_phones_from_home_page=None):
+                 aday=None, amonth=None, ayear=None, address2=None, phone2=None, notes=None, id=None,
+                 all_emails_from_home_page=None, all_phones_from_home_page=None, all_phones_from_view_page = None,
+                 all_emails_from_view_page=None, all_phones_from_edit_page=None, all_emails_from_edit_page=None):
         self.firstname = firstname
         self.middlename = middlename
         self.lastname = lastname
@@ -31,6 +32,10 @@ class Contact:
         self.id = id
         self.all_emails_from_home_page = all_emails_from_home_page
         self.all_phones_from_home_page = all_phones_from_home_page
+        self.all_emails_from_view_page = all_emails_from_view_page
+        self.all_phones_from_view_page = all_phones_from_view_page
+        self.all_phones_from_edit_page = all_phones_from_edit_page
+        self.all_emails_from_edit_page = all_emails_from_edit_page
 
     def __repr__(self):
         return "%s : %s :%s" % (self.id, self.firstname, self.lastname)
