@@ -3,28 +3,11 @@ from sys import maxsize
 import pytest
 import random
 import string
-from random import randint
 
 
 def random_string(prefix, maxlen):
     symbols = string.ascii_letters + string.digits + " "
     return prefix + "".join([random.choice(symbols) for i in range(random.randrange(maxlen))])
-
-
-def random_number(maxlen):
-    symbols = string.digits + " "
-    return "".join([random.choice(symbols) for i in range(random.randrange(maxlen))])
-
-
-def random_bday():
-    day = randint(0, 30)
-    return day
-
-
-def random_month():
-    month_list = ["January ", "February", "March", "April", "May", "June", "July", "August", "September", "October",
-                  "November", "December"]
-    return random.choice(month_list)
 
 
 testdata = [Contact(firstname="", middlename="", lastname="", nickname="", title="", company="", address="", home="",
