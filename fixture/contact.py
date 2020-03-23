@@ -114,6 +114,7 @@ class ContactHelper:
 
     def select_contact_by_index(self, index):
         wd = self.app.wd
+        self.app.open_home_page()
         wd.find_elements_by_name("selected[]")[index].click()
 
     def open_contact_to_edit_by_index(self, index):
@@ -132,8 +133,8 @@ class ContactHelper:
 
     def get_contact_info_from_edit_page(self, index):
         wd = self.app.wd
-        self.select_contact_by_index(index)
-        id = wd.find_element_by_name("id")
+        self.open_contact_to_edit_by_index(index)
+        id = wd.find_element_by_name("id").get_attribute("value")
         firstname = wd.find_element_by_name("firstname").get_attribute("value")
         lastname = wd.find_element_by_name("lastname").get_attribute("value")
         address = wd.find_element_by_name("address").text
