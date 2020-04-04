@@ -103,11 +103,13 @@ class ContactHelper:
                                                   all_phones_from_home_page=all_phones))
         return list(self.contact_cache)
 
+
+
     def delete_contact_by_index(self, index):
         wd = self.app.wd
         self.app.open_home_page()
         self.select_contact_by_index(index)
-        wd.find_element_by_name("//input[@value='Delete']").click()
+        wd.find_element_by_xpath('/html/body/div/div[4]/form[2]/div[2]/input').click()
         wd.switch_to_alert().accept()
         wd.find_element_by_link_text("home").click()
         self.contact_cache = None
@@ -157,3 +159,31 @@ class ContactHelper:
         mobile = re.search("M: (.*)", text).group(1)
         phone2 = re.search("P: (.*)", text).group(1)
         return Contact(home=home, work=work, mobile=mobile, phone2=phone2)
+
+
+    def delete_contact_by_id(self, id):
+        wd = self.app.wd
+        self.app.open_home_page()
+        self.select_contact_by_id(id)
+        wd.find_element_by_xpath('/html/body/div/div[4]/form[2]/div[2]/input').click()
+        wd.switch_to_alert().accept()
+        wd.find_element_by_link_text("home").click()
+        self.contact_cache = None
+
+    def select_contact_by_id(self, id):
+        wd = self.app.wd
+        self.app.open_home_page()
+        wd.find_element_by_css_selector("input[value='%s']" %id).click()
+
+
+    def edit_contact_by_id(self, id, new_contact_data):
+        wd = self.app.wd
+        self.app.open_home_page()
+        self.select_contact_by_id(id)
+        wd.find_element_by_xpath("//img[@alt='Edit']").click()
+        self.fill_contact_form(new_contact_data)
+        wd.find_element_by_name("update").click()
+        self.return_to_home_page()
+        self.contact_cache = None
+
+
