@@ -19,6 +19,11 @@ def test_contact_edit_and_home(app, db):
         assert contact_from_home_page.id == contact_from_db.id
         assert contact_from_home_page.firstname == contact_from_db.firstname
         assert contact_from_home_page.lastname == contact_from_db.lastname
+        assert contact_from_home_page.all_phones_from_home_page == merge_phones_like_on_home_page(contact_from_db)
+        assert contact_from_home_page.all_emails_from_home_page == merge_emails_like_on_home_page(contact_from_db)
+
+
+
 
 
 

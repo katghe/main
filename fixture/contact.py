@@ -187,3 +187,40 @@ class ContactHelper:
         self.contact_cache = None
 
 
+    def add_to_group(self, contact_id, group_id):
+        wd = self.app.wd
+        self.app.open_home_page()
+        self.select_contact_by_id(contact_id)
+        self.select_groups_by_id('to_group', group_id)
+        wd.find_element_by_name('add').click()
+        self.app.open_home_page()
+
+    def select_groups_by_id(self, group_name, value):
+        wd = self.app.wd
+        select = Select(wd.find_element_by_name(group_name))
+        select.select_by_value(value)
+
+
+    def delete_from_group(self, contact_id, group_id):
+        wd = self.app.wd
+        self.app.open_home_page()
+        self.select_groups_by_id('group', group_id)
+        self.select_contact_by_id(contact_id)
+        wd.find_element_by_name('remove').click()
+        self.app.open_home_page()
+        self.select_groups_by_id('group', "")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
