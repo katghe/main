@@ -195,9 +195,9 @@ class ContactHelper:
         wd.find_element_by_name('add').click()
         self.app.open_home_page()
 
-    def select_groups_by_id(self, group_name, value):
+    def select_groups_by_id(self, group, value):
         wd = self.app.wd
-        select = Select(wd.find_element_by_name(group_name))
+        select = Select(wd.find_element_by_name(group))
         select.select_by_value(value)
 
 
