@@ -1,0 +1,6 @@
+pytest
+selenium
+jsonpickle
+pony
+pymysql
+lxml

@@ -1,6 +1,7 @@
 from model.contact import Contact
 from model.group import Group
 import random
+import pytest
 
 def test_add_contact_to_group(app, orm):
     if len(orm.get_contact_list()) == 0:
